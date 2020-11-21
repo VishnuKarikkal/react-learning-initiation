@@ -43,3 +43,9 @@ height: 50%;
     background-color: rgb(2, 97, 97);
     color: rgb(255, 255, 255);
 }
+.products-list
+{
+    border-left: 15px double white;
+    border-right: 15px double white;
+    border-radius: 10px;
+}
