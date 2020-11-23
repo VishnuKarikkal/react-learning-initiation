@@ -15,6 +15,12 @@ background-color: rgb(223, 191, 144);
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
 }
+.completed-todo
+{
+    font-style: italic;
+    text-decoration: line-through;
+    color: grey;
+}
 .card
 {
     margin: 10px;
@@ -48,4 +54,9 @@ height: 50%;
     border-left: 15px double white;
     border-right: 15px double white;
     border-radius: 10px;
+}
+form
+{
+border: 2px solid white;
+border-radius: 10px;
 }

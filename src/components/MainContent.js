@@ -7,103 +7,65 @@ import TodosData from '../services/TodosData';
 import jokesData from '../services/JokesData';
 import ProductsData from '../services/ProductsData';
 
-function MainContent()
+class MainContent extends React.Component
 {
-    var date=new Date();
-    var hours=date.getHours();
-    var timeOfTheDay;
-    var style;
-    if(hours<12)
+    constructor()
     {
-        timeOfTheDay='Morning';
-        style={color:"goldenyellow",backgroundColor:"black"};
-    }
-    else if(hours>=12 && hours<=16)
-    {
-        timeOfTheDay='afternoon';
-        style={color:"black",backgroundColor:"yellow"};
-
-    }
-    else if(hours>16 && hours<=19)
-    {
-        timeOfTheDay='evening';
-        style={color:"red",backgroundColor:"yellow"};
-    }
-    else
-    {
-        timeOfTheDay='night';
-        style={color:"white",backgroundColor:"black"};
-    }
-    const jokes=jokesData.map(
-                            joke=>{
-                                return( 
-            <Jokes key={joke.id} question={joke.question} ans={joke.ans} />
-                            )});
-    
-    const products=ProductsData.map(
-        product=>
+        super();
+        this.state=
         {
-            return <Products key={product.id} item={product.item} description={product.description} />
+            todos:TodosData,
+            log:false
         }
-    )
-    
-    const todos=TodosData.map(
-        todo=><Todoitems key={todo.id} item={todo} />
-                            )
+        this.handleClick=this.handleClick.bind(this);
+        this.changeLog=this.changeLog.bind(this);
+    }
 
-    return(
-        <div> 
-            <h3 className="myH3" style={{color:'purple'}}>This is Main Content</h3>
-            <p style={style}>Good {timeOfTheDay}</p>
-
-      {/* todos list */}
-            <div className="container todo-list">
-                {todos}
-            </div>
-      {/* card data */}
-            <div className="container">
-                <ContentCard 
-                    cardContent=
+    handleClick(id)
+    {
+        this.setState(prevState=>
+            {
+                let newTodo = prevState.todos.map(todo=>
                     {
+                        if(todo.id === id)
                         {
-                            src:'https://www.clipartmax.com/png/middle/459-4594987_tom-and-jerry-clipart-catching-tom-and-jerry-png.png',
-                            caption:'img caption',
-                            parg:'img parg'
+                            todo.completed=!todo.completed;
                         }
-                    }
-                />
-                <ContentCard 
-                    cardContent=
-                    {
-                     {
-                         src:'https://www.clipartmax.com/png/middle/459-4594987_tom-and-jerry-clipart-catching-tom-and-jerry-png.png',
-                         caption:'img caption',
-                         parg:'img parg'
-                     }
-                    }
-                />
-                <ContentCard 
-                    cardContent=
-                    {
-                     {
-                        //  src:'https://www.clipartmax.com/png/middle/459-4594987_tom-and-jerry-clipart-catching-tom-and-jerry-png.png',
-                         caption:'img caption',
-                         parg:'img parg'
-                     }
-                    }
-                />
-            </div> 
-      {/* jokes list */}
-            <div className="jokes-list container">
-                {jokes}
-            </div>
-      {/* products list */}
-            <div className="products-list container">
-                    {products}
-            </div>
+                        return todo;
+                    });
 
-        </div>
-    );
+                    return {todos:newTodo};
+            })
+    }
+
+    changeLog()
+    {
+        console.log("cli")
+        this.setState(prevState=>
+            {
+                return {log:!prevState.log}
+            })
+    }
+    render()
+    {
+        
+const todos=
+this.state.todos.map(todo=><Todoitems key={todo.id} item={todo} handleClick={this.handleClick} />)
+
+return(
+<div> 
+<h3 className="myH3" style={{color:'purple'}}>This is Main Content</h3>
+
+
+{/* todos list */}
+<button onClick={this.changeLog}>{this.state.log?"logout":"login"}</button>
+<div className="container todo-list">
+{todos}
+</div>
+
+</div>
+);
+    }
 }
 
 export default MainContent;
